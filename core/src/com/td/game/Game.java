@@ -5,22 +5,27 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+
 /**
  * Created by Admin on 2016-11-14.
  */
 public class Game {
 
     // total screen size
-    int screen_width = Gdx.graphics.getWidth();
-    int screen_height = Gdx.graphics.getHeight();
+    int screenWidth = Gdx.graphics.getWidth();
+    int screenHeight = Gdx.graphics.getHeight();
 
 
     // The screen size for the game without the two bars
-    int game_width = (int)((float)screen_width * 0.85f);
-    int game_height = (int)((float)screen_height * 0.9f);
+    int gameWidth = (int)((float)screenWidth * 0.85f);
+    int gameHeight = (int)((float)screenHeight * 0.9f);
+
+    StatusBar statusBar;
+    ButtonBar buttonBar;
 
     public Game(){
-
+        this.statusBar = new StatusBar(0, gameHeight, gameWidth, screenHeight-gameHeight);
+        this.buttonBar = new ButtonBar(gameWidth, 0, screenWidth-gameWidth, screenHeight);
     }
 
     public void update(float deltaTime){
@@ -29,16 +34,13 @@ public class Game {
 
     public void render(SpriteBatch batch, ShapeRenderer sr){
 
-        sr.begin(ShapeRenderer.ShapeType.Filled);
 
         // drawing space for statusbar
-        sr.setColor(Color.BLUE);
-        sr.rect(0, game_height, game_width, screen_height - game_height);
+        this.statusBar.render(batch, sr);
+
 
         // drawing space for right bar thingy
-        sr.setColor(Color.RED);
-        sr.rect(game_width, 0, screen_width-game_width, screen_height);
-        sr.end();
+        this.buttonBar.render(batch,sr);
 
     }
 
